@@ -17,22 +17,27 @@ func (d *Deck) BridgeShuffler() {
 	}
 }
 
-/*
 func (d *Deck) StackShuffler() {
-	//cycles := (rand.IntN(3) + 1) * 3
-	//for _ = range(cycles){
-		//start := rand.IntN(len(d.cards) - 8)
-		//amount := rand.IntN(7)
-		start := 2
-		amount := 3
-		stackCards := d.cards[start:start+amount]
-		d.cards = append(d.cards[:start], d.cards[start+amount + 1:]...)
-		d.cards = append(d.cards, stackCards...)
-	//}
+	cycles := (rand.IntN(3) + 1) * 3
+	for _ = range(cycles){
+		start := rand.IntN(len(d.cards) - 8)
+		amount := rand.IntN(7)
 
-	
+		stackCards := make([]Card, amount)
+		copy(stackCards, d.cards[start:start+amount])
+
+		d.cards = append(d.cards[:start], d.cards[start+amount:]...)
+		d.cards = append(d.cards, stackCards...)
+	}
 }
-*/
+
+func (d *Deck) ConstantStackShuffler(freq int) {
+	for {
+		d.StackShuffler()
+		time.Sleep(time.Duration(freq) * time.Millisecond)
+	}
+}
+
 func (d *Deck) ConstantBridgeShuffler(freq int) {
 	for {
 		d.BridgeShuffler()
